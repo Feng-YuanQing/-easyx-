@@ -1,0 +1,100 @@
+#最大子段和
+
+  ```C
+  #include<stdio.h>
+  #include"graphics.h"
+  #include"conio.h"
+  #include<stdlib.h>
+  #include<string.h>
+  int produceSZ(int a[]) {
+    int i;
+    int count;
+    printf("请输入数组个数：\n");
+    scanf("%d", &count);
+
+    for (i = 0; i < count; i++) {
+      scanf("%d", &a[i]);
+    }
+
+    for (i = 0; i < count; i++) {
+      printf("%d\t", a[i]);
+    }
+    printf("\n");
+    initgraph(640, 480);
+    outtextxy(20, 30, "初始化：");
+    for (int i = 0; i < count; i++)
+    {
+      char strRes[10];
+      sprintf_s(strRes, 10, "%d", a[i]);
+      outtextxy(80 + 30 * i, 80, strRes);
+    }
+    return count;
+  }
+  void menu(int count, int a[])
+  {
+    outtextxy(20, 30, "初始化：");
+    for (int i = 0; i < count; i++)
+    {
+      char strRes[10];
+      sprintf_s(strRes, 10, "%d", a[i]);
+      outtextxy(80 + 30 * i, 80, strRes);
+    }
+  }
+  int *maxSubSum(int a[], int b[], int len) {
+    int *index;
+    int i;
+    index = (int *)malloc(sizeof(int) * 3);
+
+    b[0] = a[0];
+    index[0] = b[0];
+    index[1] = 1;
+    index[2] = 1;
+    for (i = 1; i < len; i++) {
+      cleardevice();
+      menu(len, a);
+      if (b[i - 1] > 0)
+        b[i] = b[i - 1] + a[i];
+      else {
+        b[i] = a[i];
+        index[1] = i + 1;
+      }circle(85 + 30 * (index[1] - 1),80, 10);
+      if (b[i] > index[0]) {
+        index[0] = b[i];
+        index[2] = i + 1;
+      }
+      circle(85 + 30 * (index[2]-1), 80, 10);
+      Sleep(500);
+      outtextxy(10, 130, "当前字段：");
+      for (int h = index[1]-1; h < index[2]; h++)
+      {
+        char strRes2[10];
+        sprintf_s(strRes2, 10, "%d", a[h]);
+        outtextxy(80 + 30 * h, 130, strRes2);
+      }
+      outtextxy(10, 180, "当前最长字段和：");
+      char str[10];
+      sprintf_s(str, 10, "%d", index[0]);
+      outtextxy(170, 180, str);
+      Sleep(2000);
+    }
+    return index;
+  }
+  int main()
+  {
+    int a[100];
+    int b[100];
+    int *max1;
+    int len;
+    len = produceSZ(a);
+    max1 = maxSubSum(a, b, len);
+    system("pause");
+    closegraph();
+    system("pause");
+    printf("max = %d\n", max1[0]);
+    printf("start = %d\n", max1[1]);
+    printf("end = %d\n", max1[2]);
+    system("pause");
+    return 0;
+  }
+
+  ```
