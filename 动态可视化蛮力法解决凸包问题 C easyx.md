@@ -1,6 +1,7 @@
 # 蛮力法解决凸包问题-easyx-
 ## c vs2017 easyx
 ________________________________________________________________________________
+
 ```C
 #include <graphics.h>
 #include <conio.h>
@@ -12,7 +13,9 @@ struct Point
 	double y;
 	int flag;
 }point[N];
-
+```
+```C
+.
 void ConvexHull(int n)
 {
 	double a, b, c;
@@ -50,7 +53,9 @@ void ConvexHull(int n)
 		}
 	}
 }
-
+```
+.
+```C
 int main()
 {
 
