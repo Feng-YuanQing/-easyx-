@@ -1,0 +1,87 @@
+```C
+
+#include<stdio.h>
+#include<stdlib.h>
+#define N 100
+
+// 物品种类、背包容量、二维数组列表、物品价值、物品质量、物品状态
+int n, c, m[100][100], v[100], w[100], x[100];
+```
+```C
+
+int min(int x, int y)
+{
+	if (x > y) return y;
+	else return x;
+}
+
+int max(int x, int y)
+{
+	if (x > y) return x;
+	else return y;
+}
+```
+```C
+
+void Knapsack(int v[], int w[], int c, int n, int m[][100])
+{
+	int jMax = min(w[n] - 1, c);
+	for (int j = 0; j < jMax; j++) m[n][j] = 0;
+	for (int j = w[n]; j <= c; j++) m[n][j] = v[n];
+	for (int i = n - 1; i > 1; i--)
+	{
+		jMax = min(w[i] - 1, c);
+		for (int j = 0; j <= jMax; j++) m[i][j] = m[i + 1][j];
+		for (int j = w[i]; j <= c; j++) m[i][j] = max(m[i+1][j], m[i + 1][j - w[i]] + v[i]);
+	}
+	m[1][c] = m[2][c];
+	if (c >= w[1]) m[1][c] = max(m[1][c], m[2][c - w[1]] + v[1]);
+}
+```
+```C
+
+//物品状态
+void Traceback(int m[][100], int w[], int cc, int n, int x[])
+{
+	for (int i = 1; i < n; i++)
+	{
+		if (m[i][cc] == m[i+1][cc]) x[i] = 0;
+		else {
+			x[i] = 1;
+			cc = cc - w[i];
+		}
+	}x[n] = (m[n][cc]) ? 1 : 0;
+}
+```
+```C
+
+int main()
+{
+	//输入
+	printf("以下输入输出均要求为整数：\n");
+	printf("物品种类n：");
+	scanf_s("%d", &n);
+	printf("背包容量c：");
+	scanf_s("%d", &c);
+	for (int i = 1; i <= n; i++) {
+		printf("物品%d的重量w[%d]及其价值v[%d]：", i + 1, i + 1, i + 1);
+		scanf_s("%d%d", &w[i],&v[i]);
+	}
+	system("pause");
+	//核心算法
+	system("pause");
+	Knapsack(v, w, c, n, m);
+	system("pause");
+	Traceback(m, w, c, n, x);
+	system("pause");
+	//输出
+	printf("蛮力法求解0/1背包问题：\n 所有物品的状态: X=[");
+	for (int i = 1; i <= n; i++) {
+		printf("%d ", x[i]) ;
+	}
+	printf("] 装入总价值 :   %d\n", m[1][c]);
+	system("pause");
+	return 0;
+}
+
+```
